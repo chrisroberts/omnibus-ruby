@@ -61,7 +61,18 @@ module Omnibus
 
       @dependencies = ["preparation"]
       instance_eval(io, filename, 0)
+      configure_via_config!
       render_tasks
+    end
+
+    def configure_via_config!
+      if(Omnibus.config.software_defines[@name])
+        %w(version relative_path dependencies configure_env source).each do |key|
+          if(Omnibus.config.software_defines[@name][key])
+            instance_variable_set(:"@#{key}", Omnibus.config.software_defines[@name][key])
+          end
+        end
+      end
     end
 
     def name(val=NULL_ARG)

@@ -54,6 +54,8 @@ module Omnibus
     configurable :s3_secret_key
 
     configurable :solaris_compiler
+
+    configurable :software_defines, :default => {}
   end
 
   def self.config
